@@ -10,9 +10,9 @@ export class DataController {
 
     constructor(private readonly service: DataService) { }
 
-    @Get()
-    greetingsFromData() {
-        return this.service.greet()
+    @Get('getAll')
+    getAllData() {
+        return this.service.getAllData()
     }
 
     @Post()

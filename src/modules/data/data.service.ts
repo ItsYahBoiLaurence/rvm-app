@@ -12,9 +12,14 @@ export class DataService {
         private readonly prisma: PrismaService
     ) { }
 
-    async greet() {
-        this.logger.log("Hello from the Data Service")
-        return this.prisma.transactionData.findMany()
+    async getAllData() {
+        try {
+            const data = await this.prisma.transactionData.findMany()
+            this.logger.log(data)
+            return data
+        } catch (error) {
+            this.logger.log(error)
+        }
     }
 
     async userRecycleData(payload: DataDTO) {
