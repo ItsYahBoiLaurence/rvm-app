@@ -23,7 +23,6 @@ export class DataService {
     }
 
     async userRecycleData(payload: DataDTO) {
-        this.logger.log(payload)
         const { rvmID, timestamp, totalCount, totalValue, item, messageID, userID, sign } = payload
         try {
             await this.prisma.transactionData.create({
