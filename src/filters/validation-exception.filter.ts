@@ -10,7 +10,6 @@ export class ValidationExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse<Response>()
         const exceptionResponse = exception.getResponse() as any
 
-        // Check if it's a validation error
         if (exceptionResponse.message && Array.isArray(exceptionResponse.message)) {
             const validationErrors = exceptionResponse.message;
             const errorType = this.categorizeError(validationErrors);
@@ -40,12 +39,10 @@ export class ValidationExceptionFilter implements ExceptionFilter {
             return response.status(HttpStatus.BAD_REQUEST).json(customResponse);
         }
 
-        // Default response for other BadRequestExceptions
         response.status(HttpStatus.BAD_REQUEST).json({
             code: 201,
             message: 'data is abnormal'
         });
-
 
     }
 
@@ -69,7 +66,6 @@ export class ValidationExceptionFilter implements ExceptionFilter {
                 return 'WRONG_DATATYPE';
             }
         }
-
 
         return "WRONG_DATATYPE"
     }

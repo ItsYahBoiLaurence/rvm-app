@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { DataModule } from './modules/data/data.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
+import { ApiKeyManagementModule } from './modules/api-key-management/api-key-management.module';
 
 @Module({
-  imports: [UserModule, DataModule, PrismaModule],
+  imports: [UserModule, DataModule, PrismaModule, ApiKeyManagementModule],
   controllers: [AppController],
   providers: [AppService],
 })

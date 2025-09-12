@@ -26,3 +26,20 @@ model TransactionData {
   userID     String
   sign       String
 }
+
+enum Role {
+  Admin
+  Viewer
+  Editor
+}
+
+model ApiKey {
+  apiKey       String
+  name         String
+  description  String
+  isActive     Boolean  @default(true)
+  dateCreated  DateTime @default(now())
+  companyOwner String
+  role         Role
+  id           String   @id @default(cuid())
+}
