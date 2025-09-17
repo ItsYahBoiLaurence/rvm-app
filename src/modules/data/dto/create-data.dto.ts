@@ -27,7 +27,6 @@ export class DataDTO {
     messageID: string
 
     @IsString({ message: "userID must be a string" })
-    @IsNotEmpty({ message: "userID should not be empty" })
     userID: string
 
     @IsString({ message: "sign must be a string" })

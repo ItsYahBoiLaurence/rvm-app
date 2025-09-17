@@ -15,7 +15,6 @@ export class DataService {
     async getAllData() {
         try {
             const data = await this.prisma.transactionData.findMany()
-            this.logger.log(data)
             return data
         } catch (error) {
             this.logger.log(error)
