@@ -16,14 +16,14 @@ model User {
 }
 
 model TransactionData {
-  id         String @id @default(cuid())
+  id         String  @id @default(cuid())
   rvmID      String
   timestamp  String
   totalCount String
   totalValue String
   item       String
   messageID  String
-  userID     String
+  userID     String?
   sign       String
 }
 
