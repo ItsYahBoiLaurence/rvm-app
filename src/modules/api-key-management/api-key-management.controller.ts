@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { ApiKeyManagementService } from './api-key-management.service';
 import { CreateApiKeyDTO } from './dto/create-apiKey.dto';
 import { UpdateApiKey } from './dto/update-apiKey.dto';
+import { UpdateRVMDTO } from './dto/update-rvm.dto';
 
 @Controller('api-key-management')
 export class ApiKeyManagementController {
@@ -22,6 +23,14 @@ export class ApiKeyManagementController {
     createApiKey(@Body() payload: CreateApiKeyDTO) {
         return this.service.createApiKey(payload)
     }
+
+    @Patch('addRvmToApi')
+    addRvmToApi(@Query('id') id: string, @Body() payload: UpdateRVMDTO) {
+        console.log(id)
+        console.log(payload)
+        return this.service.addRvmToApi(id, payload)
+    }
+
 
     @Patch()
     updateApiInfo(@Query('id') id: string, @Body() payload: UpdateApiKey) {

@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateApiKeyDTO } from './dto/create-apiKey.dto';
 import { format } from 'date-fns';
 import { UpdateApiKey } from './dto/update-apiKey.dto';
+import { UpdateRVMDTO } from './dto/update-rvm.dto';
 
 
 @Injectable()
@@ -16,7 +17,11 @@ export class ApiKeyManagementService {
     }
 
     async getApiList() {
-        const apiList = await this.prisma.apiKey.findMany()
+        const apiList = await this.prisma.apiKey.findMany({
+            include: {
+                rvmList: true
+            }
+        })
         if (!apiList) throw new NotFoundException('No available api!')
         return apiList
     }
@@ -78,5 +83,29 @@ export class ApiKeyManagementService {
         if (!deleteApi) throw new ConflictException("Error deleting ApiKey")
 
         return { success: true, message: "Deleted successfully!" }
+    }
+
+    async addRvmToApi(id: string, data: UpdateRVMDTO) {
+
+        const apiKey = await this.prisma.apiKey.findFirst({
+            where: {
+                id: data.apiKeyId
+            }
+        })
+
+        if (!apiKey) throw new ConflictException("Invalid API Key")
+
+        const updateRvm = await this.prisma.rVM.update({
+            where: {
+                id
+            },
+            data: {
+                apiKeyId: apiKey.id
+            }
+        })
+
+        if (!updateRvm) throw new ConflictException("Error including API to RVM")
+
+        return { success: true, message: "Update Success!" }
     }
 }

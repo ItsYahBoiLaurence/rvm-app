@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Logger, Post, UseFilters } from '@nestjs/common';
 import { DataService } from './data.service';
-import { Data } from 'src/types/data';
 import { DataDTO } from './dto/create-data.dto';
 import { ValidationExceptionFilter } from 'src/filters/validation-exception.filter';
 

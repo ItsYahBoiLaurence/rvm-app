@@ -1,8 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Data } from 'src/types/data';
 import { DataDTO } from './dto/create-data.dto';
-import { timeStamp } from 'console';
 
 @Injectable()
 export class DataService {
@@ -24,7 +22,7 @@ export class DataService {
     async userRecycleData(payload: DataDTO) {
         const { rvmID, timestamp, totalCount, totalValue, item, messageID, userID, sign } = payload
         try {
-            await this.prisma.transactionData.create({
+            const createTransaction = await this.prisma.transactionData.create({
                 data: {
                     rvmID,
                     timestamp,
@@ -34,6 +32,15 @@ export class DataService {
                     messageID,
                     userID,
                     sign
+                }
+            })
+            await this.prisma.rVM.upsert({
+                where: {
+                    rvmId: createTransaction.rvmID
+                },
+                update: {},
+                create: {
+                    rvmId: createTransaction.rvmID
                 }
             })
             return { code: 0, message: 'success' }

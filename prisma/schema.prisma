@@ -42,4 +42,12 @@ model ApiKey {
   companyOwner String
   role         Role
   id           String   @id @default(cuid())
+  rvmList      RVM[]
+}
+
+model RVM {
+  id       String  @id @default(cuid())
+  rvmId    String  @unique
+  apiKeyId String?
+  apiKey   ApiKey? @relation(fields: [apiKeyId], references: [id])
 }
