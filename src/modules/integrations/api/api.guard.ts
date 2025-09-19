@@ -16,6 +16,9 @@ export class ApiGuard implements CanActivate {
         const validApiKey = await this.prisma.apiKey.findFirst({
             where: {
                 apiKey
+            },
+            include: {
+                rvmList: true
             }
         })
 

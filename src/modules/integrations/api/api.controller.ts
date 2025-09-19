@@ -22,5 +22,4 @@ export class ApiController {
     getAlldata(@GetUser() user: ApiKeyUserType) {
         return this.service.getAllData(user)
     }
-
 }

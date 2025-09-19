@@ -4,6 +4,11 @@ export enum Role {
     EDITOR = "Editor"
 }
 
+export type RVM = {
+    id: string
+    rvmId: string
+    apiKeyId: string
+}
 
 export type ApiKeyUserType = {
     apiKey: string
@@ -14,4 +19,5 @@ export type ApiKeyUserType = {
     companyOwner: string
     role: string
     id: string
+    rvmList: RVM[]
 }

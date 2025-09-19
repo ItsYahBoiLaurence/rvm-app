@@ -13,11 +13,19 @@ export class ApiService {
     }
 
     async getAllData(api: ApiKeyUserType) {
+
+        const { rvmList } = api
+
+        const rvmID = rvmList.map((rvm) => rvm.rvmId)
+
         const transactions = await this.prisma.transactionData.findMany({
             where: {
-                rvmID: api.name
+                rvmID: {
+                    in: rvmID
+                }
             }
         })
+
         if (!transactions) throw new NotFoundException("No transaction found!")
         return transactions
     }
