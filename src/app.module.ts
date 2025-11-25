@@ -5,9 +5,10 @@ import { UserModule } from './modules/user/user.module';
 import { DataModule } from './modules/data/data.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { ApiKeyManagementModule } from './modules/api-key-management/api-key-management.module';
+import { TestEndpointsModule } from './modules/test-endpoints/test-endpoints.module';
 
 @Module({
-  imports: [UserModule, DataModule, PrismaModule, ApiKeyManagementModule],
+  imports: [UserModule, DataModule, PrismaModule, ApiKeyManagementModule, TestEndpointsModule],
   controllers: [AppController],
   providers: [AppService],
 })
