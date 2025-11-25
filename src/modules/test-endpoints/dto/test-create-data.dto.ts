@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class DataDTO {
+export class TestDataDTO {
 
     @IsString({ message: "rvmID must be a string" })
     @IsNotEmpty({ message: "rvmID should not be empty" })
