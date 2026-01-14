@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma/prisma.service';
 import { ExcelRecordType } from 'src/types/excel-file';
 import { ConfigService } from '@nestjs/config';
+import { formatDateToDB, getReportRangeDate } from 'src/libs/formatDate';
 
 @Injectable()
 export class ReportService {
@@ -17,8 +18,14 @@ export class ReportService {
   async sendExcelFileToOtherApi(fileBuffer: Buffer) {
     const form = new FormData();
 
+    const date = new Date();
+
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+
     form.append('file', fileBuffer as unknown as Buffer, {
-      filename: `example-transaction.xlsx`,
+      filename: `TranUpload_RVMsustainability${year}_QualityReport_${month + day + year}.xlsx`,
       contentType:
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
@@ -37,10 +44,17 @@ export class ReportService {
   }
 
   async generateExcelData() {
-    // TODO: Get the correct data...
+    const now = new Date();
+
+    const { startDate, endDate } = getReportRangeDate(now);
+
     const rawTransactions = await this.prisma.transactionData.findMany({
       where: {
         rvmID: 'BPIBuendia',
+        timestamp: {
+          gte: formatDateToDB(startDate),
+          lte: formatDateToDB(endDate),
+        },
       },
       select: {
         userID: true,
@@ -48,9 +62,8 @@ export class ReportService {
         timestamp: true,
       },
       orderBy: {
-        timestamp: 'desc',
+        timestamp: 'asc',
       },
-      take: 20,
     });
 
     if (!rawTransactions) return [];

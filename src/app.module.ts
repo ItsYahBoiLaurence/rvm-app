@@ -8,9 +8,15 @@ import { ApiKeyManagementModule } from './modules/api-key-management/api-key-man
 import { TestEndpointsModule } from './modules/test-endpoints/test-endpoints.module';
 import { ExcelModule } from './modules/excel/excel.module';
 import { ReportModule } from './modules/report/report.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { BullModule } from '@nestjs/bullmq';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     UserModule,
     DataModule,
     PrismaModule,
@@ -18,6 +24,18 @@ import { ReportModule } from './modules/report/report.module';
     TestEndpointsModule,
     ExcelModule,
     ReportModule,
+    ScheduleModule.forRoot(),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        connection: {
+          host: configService.get<string>('REDIS_HOSTNAME'),
+          port: configService.get<number>('REDIS_PORT'),
+          password: configService.get<string>('REDIS_PASSWORD'),
+        },
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
