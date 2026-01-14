@@ -12,7 +12,9 @@ export class ReportCronService {
     private readonly generateReportQueue: Queue,
   ) {}
 
-  @Cron('0 7 * * 1', { timeZone: 'Asia/Manila' })
+  @Cron('0 7 * * 1', {
+    timeZone: 'Asia/Manila',
+  })
   async enqueueGenerateReport() {
     this.logger.log('Queuing Generate Exell job!');
 
