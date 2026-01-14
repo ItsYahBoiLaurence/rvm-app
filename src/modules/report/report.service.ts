@@ -72,8 +72,8 @@ export class ReportService {
       const rawDate = new Date(rawTransaction.timestamp.replace(' ', 'T'));
 
       const txnDate =
-        String(rawDate.getMonth() + 1).padStart(2, '0') +
         String(rawDate.getDate()).padStart(2, '0') +
+        String(rawDate.getMonth() + 1).padStart(2, '0') +
         rawDate.getFullYear();
 
       return {
