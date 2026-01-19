@@ -12,7 +12,11 @@ export function formatDateToDB(date: Date) {
 export function getReportRangeDate(date: Date) {
   const endDate = new Date(date);
   endDate.setUTCDate(endDate.getUTCDate() - 3);
+  endDate.setUTCHours(23, 59, 59, 999);
+
   const startDate = new Date(endDate);
   startDate.setUTCDate(startDate.getUTCDate() - 6);
+  startDate.setUTCHours(0, 0, 0, 0);
+
   return { startDate, endDate };
 }
