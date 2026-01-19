@@ -18,17 +18,17 @@ export class ReportCronService {
   async enqueueGenerateReport() {
     this.logger.log('Queuing Generate Exell job!');
 
-    await this.generateReportQueue.add(
-      'Generate Report',
-      {},
-      {
-        delay: 1000,
-        attempts: 3,
-        backoff: {
-          type: 'exponential',
-          delay: 2000,
-        },
-      },
-    );
+    // await this.generateReportQueue.add(
+    //   'Generate Report',
+    //   {},
+    //   {
+    //     delay: 1000,
+    //     attempts: 3,
+    //     backoff: {
+    //       type: 'exponential',
+    //       delay: 2000,
+    //     },
+    //   },
+    // );
   }
 }
