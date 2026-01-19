@@ -7,10 +7,9 @@ import { Queue } from 'bullmq';
 export class ReportCronService {
   private readonly logger = new Logger(ReportCronService.name);
 
-  constructor(
-    @InjectQueue('generate-report-queue')
-    private readonly generateReportQueue: Queue,
-  ) {}
+  constructor() // @InjectQueue('generate-report-queue')
+  // private readonly generateReportQueue: Queue,
+  {}
 
   @Cron('0 7 * * 1', {
     timeZone: 'Asia/Manila',

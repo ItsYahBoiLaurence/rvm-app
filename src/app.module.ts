@@ -25,20 +25,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ExcelModule,
     ReportModule,
     ScheduleModule.forRoot(),
-    BullModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        connection: {
-          host: configService.get<string>('REDIS_HOSTNAME'),
-          port: configService.get<number>('REDIS_PORT'),
-          password: configService.get<string>('REDIS_PASSWORD'),
-          tls: {},
-          maxRetriesPerRequest: null,
-          enableReadyCheck: false,
-        },
-      }),
-    }),
+    // BullModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: (configService: ConfigService) => ({
+    //     connection: {
+    //       host: configService.get<string>('REDIS_HOSTNAME'),
+    //       port: configService.get<number>('REDIS_PORT'),
+    //       password: configService.get<string>('REDIS_PASSWORD'),
+    //       tls: {},
+    //       maxRetriesPerRequest: null,
+    //       enableReadyCheck: false,
+    //     },
+    //   }),
+    // }),
   ],
   controllers: [AppController],
   providers: [AppService],
