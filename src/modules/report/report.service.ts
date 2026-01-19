@@ -25,7 +25,7 @@ export class ReportService {
     const day = String(date.getUTCDate()).padStart(2, '0');
 
     form.append('file', fileBuffer as unknown as Buffer, {
-      filename: `TranUpload_RVMsustainability${year}_QualityReport_${month + day + year}.xlsx`,
+      filename: `TranUpload_RVMsustainability${year}_${month + day + year}.xlsx`,
       contentType:
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
