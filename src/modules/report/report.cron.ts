@@ -1,15 +1,18 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
+import { ReportService } from './report.service';
+import { ExcelService } from '../excel/excel.service';
 
 @Injectable()
 export class ReportCronService {
   private readonly logger = new Logger(ReportCronService.name);
 
-  constructor() // @InjectQueue('generate-report-queue')
-  // private readonly generateReportQueue: Queue,
-  {}
+  constructor(
+    private readonly reportService: ReportService,
+    private readonly excelService: ExcelService,
+  ) {} // private readonly generateReportQueue: Queue, // @InjectQueue('generate-report-queue')
 
   @Cron('0 7 * * 1', {
     timeZone: 'Asia/Manila',
@@ -29,5 +32,13 @@ export class ReportCronService {
     //     },
     //   },
     // );
+
+    const rawExcelData = await this.reportService.generateExcelData();
+    const excelFile = await this.excelService.generateExcelFile(rawExcelData);
+    const report = this.reportService.sendExcelFileToOtherApi(
+      Buffer.from(excelFile),
+    );
+    this.logger.log(report);
+    return report;
   }
 }
